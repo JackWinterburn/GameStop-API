@@ -1,0 +1,32 @@
+{
+  "name": "gamestop-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JackWinterburn/GameStop-API.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JackWinterburn/GameStop-API/issues"
+  },
+  "homepage": "https://github.com/JackWinterburn/GameStop-API#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.18"
+  },
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "express": "^4.18.1",
+    "express-handlebars": "^6.0.6",
+    "express-session": "^1.17.3",
+    "mongoose": "^6.4.1",
+    "passport": "^0.6.0",
+    "passport-local": "^1.0.0"
+  }
+}

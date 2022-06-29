@@ -1,0 +1,13 @@
+<div class="home">
+    <h1>Games</h1>
+
+    <div class="main">
+        <ul>
+
+        {{#each games}}
+        <p>{{this.title}} | £{{this.price}}</p>
+        {{/each}}
+        </ul>
+    </div>
+    <a href="/logout">logout</a>
+</div>

@@ -1,2 +1,1 @@
 # GameStop-API
-# GameStop-API

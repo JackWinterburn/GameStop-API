@@ -1,11 +1,13 @@
-const express       = require("express");
-const session       = require("express-session");
-const hbs           = require("express-handlebars");
-const mongoose      = require("mongoose");
-const passport      = require("passport");
-const localStrategy = require("passport-local").Strategy;
-const bcrypt        = require("bcrypt");
-const app           = express();
+const express       = require("express")
+const session       = require("express-session")
+const bodyParser    = require("body-parser")
+const hbs           = require("express-handlebars")
+const mongoose      = require("mongoose")
+const passport      = require("passport")
+const localStrategy = require("passport-local").Strategy
+const bcrypt        = require("bcrypt")
+const app           = express()
+const Game          = require("./models/Game")
 
 const PORT = process.env.PORT || 3000
 const User = require("./models/User")
@@ -23,8 +25,9 @@ app.use(session({
     resave: false,
     saveUninitialized: true
 }))
-app.use(express.urlencoded({extended: false}))
-app.use(express.json())
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 //Authentication
 app.use(passport.initialize())
@@ -55,7 +58,59 @@ passport.use(new localStrategy((username, password, done) => {
 }))
 
 
+function isLoggedIn(req, res, next) {
+    if(req.isAuthenticated()) return next()
+    res.redirect("/login")
+}
+
+function isLoggedOut(req, res, next) {
+    if(!req.isAuthenticated()) return next()
+    res.redirect("/")
+}
+
+
+
 //Setup routes
-require("./routes")(app, passport)
+
+app.get("/", isLoggedIn, async (req, res) => {
+    await Game.find({}, (err, games) => {
+        if(!err) res.render("index", {title: "Games", games: games})
+        else throw err
+    }).lean().clone().catch(err => console.error(err))
+})
+
+app.get("/login", isLoggedOut, (req, res) => {
+    const response ={
+        title: "Login",
+        error: req.query.error
+    }
+    res.render("login", response);
+})
+
+app.post("/login", passport.authenticate("local", {
+    successRedirect: "/",
+    failureRedirect: "/login?error=true"
+}));
+
+app.get("/logout", (req, res) => {
+    req.logout((err) => {
+        if (err) return next(err);
+        res.redirect("/");
+    });
+})
+
+app.get("/add", isLoggedIn, (req, res) => {
+    res.render("add", {title: "Add game"})
+})
+
+app.post("/add", (req, res) => {
+    let title = req.body.title, price = req.body.price
+    const newGame = new Game({
+        title,
+        price
+    })
+    newGame.save()
+    res.redirect("/")
+})
 
 app.listen(PORT, () => console.log(`server running on port ${PORT}`))

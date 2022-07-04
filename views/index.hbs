@@ -2,12 +2,29 @@
     <h1>Games</h1>
 
     <div class="main">
-        <ul>
-
+        <table>
+            <tr>
+                <th>Title</th>
+                <th>Price</th>
+            </tr>
         {{#each games}}
-        <p>{{this.title}} | £{{this.price}}</p>
+            <tr>
+                <td id="{{this._id}}">
+                    <div class="cell">
+                    {{this.title}}
+                    </div>
+                </td>
+                <td>
+                    <div class="cell">
+
+                    £{{this.price}}
+                    </div>
+                </td>
+            </tr>            
         {{/each}}
-        </ul>
+        </table>
     </div>
+    <a href="/add">add games</a>
+    |
     <a href="/logout">logout</a>
 </div>

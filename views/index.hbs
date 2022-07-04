@@ -2,27 +2,21 @@
     <h1>Games</h1>
 
     <div class="main">
-        <table>
-            <tr>
-                <th>Title</th>
-                <th>Price</th>
-            </tr>
+        <div class="table">
+                <div class="table-head">Title</div>
+                <div class="table-head">Price</div>
         {{#each games}}
-            <tr>
-                <td id="{{this._id}}">
+                <a class="table-row" title="game link" href="/game?id={{this._id}}">
                     <div class="cell">
                     {{this.title}}
                     </div>
-                </td>
-                <td>
                     <div class="cell">
 
                     £{{this.price}}
                     </div>
-                </td>
-            </tr>            
+                </a>
         {{/each}}
-        </table>
+        </div >
     </div>
     <a href="/add">add games</a>
     |

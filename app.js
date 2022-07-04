@@ -113,4 +113,16 @@ app.post("/add", (req, res) => {
     res.redirect("/")
 })
 
+app.get("/game", async (req, res) => {
+    let gameId = req.query.id
+    const exists = await Game.exists({_id: gameId})
+    if (exists) {
+        const game = await Game.findOne({_id: gameId})
+        console.log(game)
+        res.render("game", {title: "Game", name: game.title, price: game.price, id: game._id})
+    } else {
+        res.render("error", {title: "error"})
+    }
+})
+
 app.listen(PORT, () => console.log(`server running on port ${PORT}`))

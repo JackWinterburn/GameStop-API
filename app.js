@@ -135,4 +135,17 @@ app.post("/delete", async (req, res) => {
     }
 })
 
+app.post("/edit", async (req, res) => {
+    let gameId = req.query.id
+    let title = req.body.title
+    let price = req.body.price
+    const exists = await Game.exists({_id: gameId})
+    if (exists) {
+        await Game.updateOne({_id: gameId}, { $set: {title, price}})
+        res.redirect("/")
+    } else {
+        res.render("error", {title: "error"})
+    }
+})
+
 app.listen(PORT, () => console.log(`server running on port ${PORT}`))

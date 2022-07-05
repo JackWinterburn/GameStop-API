@@ -1,21 +1,37 @@
 <div class="home">
     <div class="main">
-        
-    <h1>
-        {{name}}
-    </h1>
-    <h2>
-        £{{price}}
-    </h2>
+    
+    <div class="form-wrapper">
 
-    <div class="actions">
+    <form action="/edit?id={{id}}" method="post" class="game">
+    <label>Title:</label>
+    <input type="text" name="title" id="title" value="{{name}}"/>
+    <label>Price:</label>
+    <input type="number" name="price" id="price" value="{{price}}">
+    <input type="submit" id="edit" class="edit game" value="Submit Changes">
+    
+    
+
+    </form>
         <form action="/delete?id={{id}}" method="post" class="game">
-            <button class="delete">Remove</button>
+            <button class="delete game">Remove</button>
         </form>
-
-        <button class="edit">Edit</button>
     </div>
-
     </div>
     <a href="/">back</a>
 </div>
+
+<script>
+    const title = document.getElementById("title");
+    const price = document.getElementById("price");
+    const editBtn = document.getElementById("edit");
+    editBtn.style = "display: none";
+
+    title.oninput = () => {
+        editBtn.style = "display: default";
+    }
+
+    price.onchange = () => {
+        editBtn.style = "display: default";
+    }
+</script>

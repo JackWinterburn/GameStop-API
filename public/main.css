@@ -26,7 +26,7 @@ body {
     text-align: center;
 }
 
-form {
+form:not([class="game"]){
     display: block;
     width: 100%;
     max-width: 400px;
@@ -63,7 +63,7 @@ form label {
     margin-bottom: 5px;
 }
 
-form input {
+form input :not([class="delete"]) {
     appearance: none;
     background: none;
     outline: none;
@@ -92,7 +92,7 @@ form input:not([type="submit"]):focus, form input:not([type="submit"]):valid {
    box-shadow: 0 6px 12px rgba(0,0,0,0,2);
 }
 
-form input[type="submit"] {
+form input[type="submit"]:not([class="delete"]) {
     display: block;
     width: 100%;
     padding: 15px;

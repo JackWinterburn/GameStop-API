@@ -118,8 +118,18 @@ app.get("/game", async (req, res) => {
     const exists = await Game.exists({_id: gameId})
     if (exists) {
         const game = await Game.findOne({_id: gameId})
-        console.log(game)
         res.render("game", {title: "Game", name: game.title, price: game.price, id: game._id})
+    } else {
+        res.render("error", {title: "error"})
+    }
+})
+
+app.post("/delete", async (req, res) => {
+    let gameId = req.query.id
+    const exists = await Game.exists({_id: gameId})
+    if (exists) {
+        await Game.deleteOne({_id: gameId})
+        res.redirect("/")
     } else {
         res.render("error", {title: "error"})
     }
